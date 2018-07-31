@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="meuModulo">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../assets/css/stylo.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+</head>
+
+<body ng-controller="indexController">
+    <div class="container">
+        <div class="filtros-container">
+            <!-- filtros -->
+            <section class="filtros">
+                <h2 class="filtros-colaboradores-title">FILTRAR COLABORADORES</h2>
+                <input type="text" class="search" placeholder="Filtrar por todos os campos" ng-model="busca">
+                <div class="middle-text">
+                    ou
+                </div>
+                <h3 class="filtros-categoria-title">Filtrar por categoria</h3>
+                <!-- Filtro por departamento -->
+                <div tabindex="0" class="onclick-filter departamento-icon">
+                    <span class="filter-placeholder" ng-bind="departmentTitulo">{{departmentTitulo}}</span>
+                    <ul class="onclick-filter-content">
+                        <li>
+                            <button ng-click="capturaValorDepartment('Departamento')">Todos os Departamentos</button>
+                        </li>
+                        <li ng-repeat="user in usersDepartment">
+                            <button ng-click="capturaValorDepartment(user.department)">{{user.department}}</button>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Filtro por cargo -->
+                <div tabindex="0" class="onclick-filter cargo-icon">
+                    <span class="filter-placeholder" ng-bind="roleTitulo">{{roleTitulo}}</span>
+                    <ul class="onclick-filter-content">
+                        <li>
+                            <button ng-click="capturaValorRole('Cargo')">Todos os Cargos</button>
+                        </li>
+                        <li ng-repeat="user in usersRole">
+                            <button ng-click="capturaValorRole(user.role)">{{user.role}}</button>
+                        </li>
+                    </ul>
+                </div>
+                <input type="text" ng-model="role" style="visibility: hidden">
+                <button class="btn-filtrar" ng-click="filtrar();">Filtrar</button>
+            </section>
+            <!-- fim da seção filtros -->
+        </div>
+        <div class="colaboradores-container">
+            <!-- colaboradores -->
+            <section class="colaboradores">
+                <section class="departamento">
+                    <div class="wrapper">
+
+                        <div class="derpatamento-wrapper">
+
+                            <div class="thumb" ng-if="( (accounting|filter:busca).length > 0  && (accounting|filter:role).length > 0 && valorBuscaDepartment === 'Departamento') || valorBuscaDepartment === 'Accounting'">
+                                <h2 class="departamento-title">{{accounting[0].department}}</h2>
+                                <div class="infos-wrapper" ng-repeat="user in accounting | filter:busca | filter:role">
+
+                                    <img src="{{user.photo}}" alt="" class="thumb-img">
+                                    <div class="infos">
+                                        <h2 class="thumb-name">{{user.name}}</h2>
+                                        <h3 class="thumb-role">{{user.role}}</h3>
+                                        <span class="only-search-department">{{user.department}}</span>
+                                    </div>
+                                    <div class="hr-wrapper">
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="thumb" ng-show="( (business|filter:busca).length > 0   && (business|filter:role).length > 0 && valorBuscaDepartment === 'Departamento' ) || valorBuscaDepartment === 'Business Development'">
+                                <h2 class="departamento-title">{{business[0].department}}</h2>
+                                <div class="infos-wrapper" ng-repeat="user in business | filter:busca  | filter:role">
+                                    <img src="{{user.photo}}" alt="" class="thumb-img">
+                                    <div class="infos">
+                                        <h2 class="thumb-name">{{user.name}}</h2>
+                                        <h3 class="thumb-role">{{user.role}}</h3>
+                                        <span class="only-search-department">{{user.department}}</span>
+                                    </div>
+                                    <div class="hr-wrapper">
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="thumb" ng-show="( (engineering|filter:busca).length > 0   && (engineering|filter:role).length > 0 && valorBuscaDepartment === 'Departamento' ) || valorBuscaDepartment === 'Engineering'">
+                                <h2 class="departamento-title">{{engineering[0].department}}</h2>
+                                <div class="infos-wrapper" ng-repeat="user in engineering | filter:busca  | filter:role">
+                                    <img src="{{user.photo}}" alt="" class="thumb-img">
+                                    <div class="infos">
+                                        <h2 class="thumb-name">{{user.name}}</h2>
+                                        <h3 class="thumb-role">{{user.role}}</h3>
+                                        <span class="only-search-department">{{user.department}}</span>
+                                    </div>
+                                    <div class="hr-wrapper">
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="thumb" ng-show="( (human|filter:busca).length > 0   && (human|filter:role).length > 0 && valorBuscaDepartment === 'Departamento' ) || valorBuscaDepartment === 'Human Resources'">
+                                <h2 class="departamento-title">{{human[0].department}}</h2>
+                                <div class="infos-wrapper" ng-repeat="user in human | filter:busca  | filter:role">
+                                    <img src="{{user.photo}}" alt="" class="thumb-img">
+                                    <div class="infos">
+                                        <h2 class="thumb-name">{{user.name}}</h2>
+                                        <h3 class="thumb-role">{{user.role}}</h3>
+                                        <span class="only-search-department">{{user.department}}</span>
+                                    </div>
+                                    <div class="hr-wrapper">
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="thumb" ng-show="( (legal|filter:busca).length > 0   && (legal|filter:role).length > 0 && valorBuscaDepartment === 'Departamento' ) || valorBuscaDepartment === 'Legal'">
+                                <h2 class="departamento-title">{{legal[0].department}}</h2>
+                                <div class="infos-wrapper" ng-repeat="user in legal | filter:busca  | filter:role">
+                                    <img src="{{user.photo}}" alt="" class="thumb-img">
+                                    <div class="infos">
+                                        <h2 class="thumb-name">{{user.name}}</h2>
+                                        <h3 class="thumb-role">{{user.role}}</h3>
+                                        <span class="only-search-department">{{user.department}}</span>
+                                    </div>
+                                    <div class="hr-wrapper">
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="thumb" ng-show="( (marketing|filter:busca).length > 0   && (marketing|filter:role).length > 0 && valorBuscaDepartment === 'Departamento' ) || valorBuscaDepartment === 'Marketing'">
+                                <h2 class="departamento-title">{{marketing[0].department}}</h2>
+                                <div class="infos-wrapper" ng-repeat="user in marketing | filter:busca  | filter:role">
+                                    <img src="{{user.photo}}" alt="" class="thumb-img">
+                                    <div class="infos">
+                                        <h2 class="thumb-name">{{user.name}}</h2>
+                                        <h3 class="thumb-role">{{user.role}}</h3>
+                                        <span class="only-search-department">{{user.department}}</span>
+                                    </div>
+                                    <div class="hr-wrapper">
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="thumb" ng-show="( (product|filter:busca).length > 0   && (product|filter:role).length > 0 && valorBuscaDepartment === 'Departamento' ) || valorBuscaDepartment === 'Product Management'">
+                                <h2 class="departamento-title">{{product[0].department}}</h2>
+                                <div class="infos-wrapper" ng-repeat="user in product | filter:busca  | filter:role">
+                                    <img src="{{user.photo}}" alt="" class="thumb-img">
+                                    <div class="infos">
+                                        <h2 class="thumb-name">{{user.name}}</h2>
+                                        <h3 class="thumb-role">{{user.role}}</h3>
+                                        <span class="only-search-department">{{user.department}}</span>
+                                    </div>
+                                    <div class="hr-wrapper">
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="thumb" ng-show="( (research|filter:busca).length > 0   && (research|filter:role).length > 0 && valorBuscaDepartment === 'Departamento' ) || valorBuscaDepartment === 'Research and Development'">
+                                <h2 class="departamento-title">{{research[0].department}}</h2>
+                                <div class="infos-wrapper" ng-repeat="user in research | filter:busca  | filter:role">
+                                    <img src="{{user.photo}}" alt="" class="thumb-img">
+                                    <div class="infos">
+                                        <h2 class="thumb-name">{{user.name}}</h2>
+                                        <h3 class="thumb-role">{{user.role}}</h3>
+                                        <span class="only-search-department">{{user.department}}</span>
+                                    </div>
+                                    <div class="hr-wrapper">
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="thumb" ng-show="( (sales|filter:busca).length > 0   && (sales|filter:role).length > 0 && valorBuscaDepartment === 'Departamento' ) || valorBuscaDepartment === 'Sales'">
+                                <h2 class="departamento-title">{{sales[0].department}}</h2>
+                                <div class="infos-wrapper" ng-repeat="user in sales | filter:busca  | filter:role">
+                                    <img src="{{user.photo}}" alt="" class="thumb-img">
+                                    <div class="infos">
+                                        <h2 class="thumb-name">{{user.name}}</h2>
+                                        <h3 class="thumb-role">{{user.role}}</h3>
+                                        <span class="only-search-department">{{user.department}}</span>
+                                    </div>
+                                    <div class="hr-wrapper">
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="thumb" ng-show="( (training|filter:busca).length > 0   && (training|filter:role).length > 0 && valorBuscaDepartment === 'Departamento' ) || valorBuscaDepartment === 'Training'">
+                                <h2 class="departamento-title">{{training[0].department}}</h2>
+                                <div class="infos-wrapper" ng-repeat="user in training | filter:busca  | filter:role">
+                                    <img src="{{user.photo}}" alt="" class="thumb-img">
+                                    <div class="infos">
+                                        <h2 class="thumb-name">{{user.name}}</h2>
+                                        <h3 class="thumb-role">{{user.role}}</h3>
+                                        <span class="only-search-department">{{user.department}}</span>
+                                    </div>
+                                    <div class="hr-wrapper">
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="thumb" ng-show="( (services|filter:busca).length > 0   && (services|filter:role).length > 0 && valorBuscaDepartment === 'Departamento' ) || valorBuscaDepartment === 'Services'">
+                                <h2 class="departamento-title">{{services[0].department}}</h2>
+                                <div class="infos-wrapper" ng-repeat="user in services | filter:busca  | filter:role">
+                                    <img src="{{user.photo}}" alt="" class="thumb-img">
+                                    <div class="infos">
+                                        <h2 class="thumb-name">{{user.name}}</h2>
+                                        <h3 class="thumb-role">{{user.role}}</h3>
+                                        <span class="only-search-department">{{user.department}}</span>
+                                    </div>
+                                    <div class="hr-wrapper">
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="thumb" ng-show="( (support|filter:busca).length > 0   && (support|filter:role).length > 0 && valorBuscaDepartment === 'Departamento' ) || valorBuscaDepartment === 'Support'">
+                                <h2 class="departamento-title">{{support[0].department}}</h2>
+                                <div class="infos-wrapper" ng-repeat="user in support | filter:busca  | filter:role">
+                                    <img src="{{user.photo}}" alt="" class="thumb-img">
+                                    <div class="infos">
+                                        <h2 class="thumb-name">{{user.name}}</h2>
+                                        <h3 class="thumb-role">{{user.role}}</h3>
+                                        <span class="only-search-department">{{user.department}}</span>
+                                    </div>
+                                     <div class="hr-wrapper">
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </section>
+            </section>
+            <!-- fim da seção colaboradores -->
+        </div>
+    </div>
+    <script src="../lib/angularjs.min.js"></script>
+    <script src="../app/app.js"></script>
+    <script src="../app/controllers/indexController.js"></script>
+    <script src="../app/filters/filterDepartment.js"></script>
+    <script src="../index.js"></script>
+</body>
+
+</html>
