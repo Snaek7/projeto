@@ -65,6 +65,7 @@ body {
   overflow: hidden;
   width: 1600px;
   margin: 0 auto;
+  zoom: 0.7;
 }
 
 .container {
